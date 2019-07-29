@@ -1,9 +1,18 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tabs</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>发现</ion-label>
+    </ion-tab-button>
 
-<ion-content>
+    <ion-tab-button tab="message">
+      <ion-icon name="bulb"></ion-icon>
+      <ion-label>消息</ion-label>
+    </ion-tab-button>
 
-</ion-content>
+    <ion-tab-button tab="aboutme">
+      <ion-icon name="contact"></ion-icon>
+      <ion-label>我的</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

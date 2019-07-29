@@ -10,7 +10,47 @@ import { TabsPage } from './tabs.page';
 const routes: Routes = [
   {
     path: '',
-    component: TabsPage
+    component: TabsPage,
+    children: [
+      {
+        path: 'home',
+        children: [
+          {
+            path: '',
+            loadChildren: '../home/home.module#HomePageModule'
+          }
+        ]
+      },
+      {
+        path: 'aboutme',
+        children: [
+          {
+            path: '',
+            loadChildren: '../aboutme/aboutme.module#AboutmePageModule'
+          }
+        ]
+      },
+      {
+        path: 'message',
+        children: [
+          {
+            path: '',
+            loadChildren: '../message/message.module#MessagePageModule'
+          }
+        ]
+      },
+      {
+        path: '',
+        redirectTo: '/tabs/home',
+        pathMatch: 'full'
+      }
+    ]
+  },
+
+  {
+    path: '',
+    redirectTo: '/tabs/home',
+    pathMatch: 'full'
   }
 ];
 

@@ -1,0 +1,176 @@
+.content {
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.forms {
+    width: 100%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.title {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: bolder;
+}
+
+.align_center {
+    text-align: center;
+}
+
+.item_background_transparent {
+    --background: transparent;
+}
+
+.item_border_redius {
+    --border-radius:30px;
+}
+
+.input_placeholder_coler {
+    --placeholder-color: #0A46AE;
+}
+
+.margin_top {
+    margin-top: 1rem;
+}
+
+.margin_top_more {
+    margin-top: 1.5rem;
+}
+
+.background_primary {
+    --background: var(--ion-color-primary);
+}
+
+.background_border_primary {
+    --background:#0A46AE;
+}
+
+.text_fonts {
+    color:white;
+    font-size: 1rem;
+}
+
+.checkbox_size {
+    --size: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.check ion-item {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.logo {
+    max-width: 100%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.bottons_shadow_none {
+    --box-shadow:none;
+}
+
+.block_test {
+    background-color: aqua;
+}
+
+.botton_selected {
+    color: white;
+    white-space: nowrap;
+    font-size: 1.6rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-weight: bolder;
+}
+
+.botton_unselected {
+    color: white;
+    white-space: nowrap;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.margin_bottom {
+    margin-bottom: 1rem;
+}
+
+.position_relative {
+    position: relative;
+}
+
+.position_absolute_center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform:translate( -50%, -50%);
+}
+
+.position_absolute_left {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translate( 0%, -50%);
+}
+
+.position_absolute_right {
+    position: absolute;
+    left: 95%;
+    top: 50%;
+    transform: translate( -100%, -50%);
+}
+
+.position_absolute_mid_right {
+    position: absolute;
+    left: 75%;
+    top: 50%;
+    transform: translate( -100%, -50%);
+}
+
+.position_absolute_mid_left {
+    position: absolute;
+    left: 25%;
+    top: 50%;
+    transform: translate( 0%, -50%);
+}
+
+.transition_quick {
+    transition: all 0.75s;
+}
+
+.transition_slow {
+    transition: all 1s;
+}
+
+.over_flow {
+    white-space: nowrap;
+    overflow: visible;
+}
+
+
+
+
+

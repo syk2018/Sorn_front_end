@@ -1,5 +1,7 @@
 {
   "name": "WebPublishingSystemFrontEnd",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

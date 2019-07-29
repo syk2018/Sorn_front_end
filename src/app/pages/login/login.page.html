@@ -1,9 +1,97 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="background_primary">
+  <div class="content">
+    <div class="forms">
+      <div class="logo align_center margin_bottom">
+        <img src="assets/logo.png" @InsertRemoveTrigger>
+      </div>
+      <div class="position_relative">
+        <div [ngClass]="signinButtonCurrentClass">
+          <a (click)='setSelectTrue()' [ngClass]="signinButtonStyleClass">Sign in</a>
+          <!--<ion-button (click)='setSelectTrue()' class="bottons_shadow_none" [size]="signin_isSelected ? 'large' : 'default'">登陆</ion-button>-->
+        </div>
+        <div [ngClass]="orLabelCurrentClass">
+          <ion-label>- or -</ion-label>
+        </div>
+        <div [ngClass]="signupButtonCurrentClass">
+          <a (click)='setSelectFalse()' [ngClass]="signupButtonStyleClass">Sign up</a>
+          <!--<ion-button (click)='setSelectFalse()' class="bottons_shadow_none" [size]="!signin_isSelected ? 'large' : 'default'">注册</ion-button>-->
+        </div>
+      </div>
 
-<ion-content>
+      <form *ngIf="signin_isSelected" padding class="align_center margin_top_more" [formGroup]="signinForm" (ngSubmit)="onSigninSubmit()">
+        <div @flyDownTrigger_multiple>
+          <ion-item lines="none" class="item_border_redius margin_top">
+              <ion-label>
+                <ion-icon name="person" color="primary"></ion-icon>
+              </ion-label>
+              <ion-input type="text" formControlName="username" placeholder="Username:" class="input_placeholder_coler"></ion-input>
+            </ion-item>
+      
+            <ion-item lines="none" class="item_border_redius margin_top">
+              <ion-label>
+                <ion-icon name="lock" color="primary"></ion-icon>
+              </ion-label>
+              <ion-input type="password" formControlName="password" placeholder="Password:" class="input_placeholder_coler"></ion-input>
+            </ion-item>
+      
+            <div class="check" *ngIf="signin_isSelected">
+              <ion-item lines="none" class="item_border_redius margin_top item_background_transparent text_fonts">
+                <ion-checkbox class="checkbox_size" color="light" checked="true"></ion-checkbox>
+                  <ion-label class="over_flow">
+                    Remember me
+                  </ion-label>
+              </ion-item>
+      
+              <ion-item routerLink='/forget' lines="none" class="item_border_redius margin_top item_background_transparent text_fonts">
+                <ion-icon color="light" name="help-circle"></ion-icon>
+                <ion-label class="over_flow">
+                  Forget password？
+                </ion-label>
+              </ion-item>
+            </div>
+        </div>
+          
+        <ion-item *ngIf="signin_isSelected" lines="none" disabled="true" class="item_border_redius margin_top item_background_transparent"></ion-item>
+    
+        <ion-button @flyInOutLeft [disabled]="!signinForm.valid" expand="block" type="submit" class="background_border_primary margin_top">
+          <div @InsertRemoveTrigger_Quick *ngIf="signin_isSelected">Login</div>
+        </ion-button> 
+      </form>
 
+      <form *ngIf="!signin_isSelected" padding class="align_center margin_top_more" [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
+        <div @flyUpTrigger_multiple>
+          <ion-item lines="none" class="item_border_redius margin_top">
+              <ion-label>
+                <ion-icon name="person" color="primary"></ion-icon>
+              </ion-label>
+              <ion-input type="text" formControlName="username" placeholder="Username:" class="input_placeholder_coler"></ion-input>
+            </ion-item>
+    
+            <ion-item lines="none" class="item_border_redius margin_top">
+              <ion-label>
+                <ion-icon name="lock" color="primary"></ion-icon>
+              </ion-label>
+              <ion-input type="password" formControlName="password" placeholder="Password:" class="input_placeholder_coler"></ion-input>
+            </ion-item>
+            
+            <ion-item lines="none"  *ngIf="!signin_isSelected" class="item_border_redius margin_top">
+              <ion-label>
+                <ion-icon name="lock" color="primary"></ion-icon>
+              </ion-label>
+              <ion-input type="password"  formControlName="re_password" placeholder="Repeat password:" class="input_placeholder_coler"></ion-input>
+            </ion-item>
+    
+            <ion-item lines="none" *ngIf="!signin_isSelected" class="item_border_redius margin_top">
+              <ion-label>
+                <ion-icon color="primary" name="happy"></ion-icon>
+              </ion-label>
+              <ion-input type="text" formControlName="nickname" placeholder="nickname:" class="input_placeholder_coler"></ion-input>
+            </ion-item>
+        </div>
+        <ion-button @flyInOutRight [disabled]="!signupForm.valid" expand="block" type="submit" class="background_border_primary margin_top">
+          <div @InsertRemoveTrigger_Quick *ngIf="!signin_isSelected">Submit</div>
+        </ion-button>
+      </form>
+    </div>
+  </div>
 </ion-content>
