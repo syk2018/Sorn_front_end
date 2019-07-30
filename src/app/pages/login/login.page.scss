@@ -82,6 +82,10 @@ form {
     max-width: 100%;
 }
 
+.logo img {
+    width: 35%;
+}
+
 .buttons {
     display: flex;
     flex-direction: row;
@@ -116,6 +120,10 @@ form {
 
 .margin_bottom {
     margin-bottom: 1rem;
+}
+
+.margin_top_much {
+    margin-top: 3rem;
 }
 
 .position_relative {
@@ -169,6 +177,8 @@ form {
     white-space: nowrap;
     overflow: visible;
 }
+
+
 
 
 

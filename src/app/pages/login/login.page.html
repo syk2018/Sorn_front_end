@@ -4,7 +4,7 @@
       <div class="logo align_center margin_bottom">
         <img src="assets/logo.png" @InsertRemoveTrigger>
       </div>
-      <div class="position_relative">
+      <div class="position_relative margin_top_much">
         <div [ngClass]="signinButtonCurrentClass">
           <a (click)='setSelectTrue()' [ngClass]="signinButtonStyleClass">Sign in</a>
           <!--<ion-button (click)='setSelectTrue()' class="bottons_shadow_none" [size]="signin_isSelected ? 'large' : 'default'">登陆</ion-button>-->
@@ -85,7 +85,7 @@
               <ion-label>
                 <ion-icon color="primary" name="happy"></ion-icon>
               </ion-label>
-              <ion-input type="text" formControlName="nickname" placeholder="nickname:" class="input_placeholder_coler"></ion-input>
+              <ion-input type="text" formControlName="nickname" placeholder="Nickname:" class="input_placeholder_coler"></ion-input>
             </ion-item>
         </div>
         <ion-button @flyInOutRight [disabled]="!signupForm.valid" expand="block" type="submit" class="background_border_primary margin_top">
