@@ -1,9 +1,14 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>aboutme</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
+  <div class="informationbar">
+    <div class="background"></div>
+    <div class="content flex_center">
+      <div class="flex_center felx_colum">
+        <img [src]= "userAvatarUrl">
+        <ion-label class="margin_top font_title">{{userInformation.usernickname}}</ion-label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <ion-button expand="full" color="danger" (click)="signout()">Sign out</ion-button>
+  </div>
 </ion-content>

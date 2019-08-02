@@ -7,14 +7,12 @@
       <div class="position_relative margin_top_much">
         <div [ngClass]="signinButtonCurrentClass">
           <a (click)='setSelectTrue()' [ngClass]="signinButtonStyleClass">Sign in</a>
-          <!--<ion-button (click)='setSelectTrue()' class="bottons_shadow_none" [size]="signin_isSelected ? 'large' : 'default'">登陆</ion-button>-->
         </div>
         <div [ngClass]="orLabelCurrentClass">
           <ion-label>- or -</ion-label>
         </div>
         <div [ngClass]="signupButtonCurrentClass">
           <a (click)='setSelectFalse()' [ngClass]="signupButtonStyleClass">Sign up</a>
-          <!--<ion-button (click)='setSelectFalse()' class="bottons_shadow_none" [size]="!signin_isSelected ? 'large' : 'default'">注册</ion-button>-->
         </div>
       </div>
 
@@ -31,7 +29,7 @@
               <ion-label>
                 <ion-icon name="lock" color="primary"></ion-icon>
               </ion-label>
-              <ion-input type="password" formControlName="password" placeholder="Password:" class="input_placeholder_coler"></ion-input>
+              <ion-input type="password" formControlName="userpwd" placeholder="Password:" class="input_placeholder_coler"></ion-input>
             </ion-item>
       
             <div class="check" *ngIf="signin_isSelected">
@@ -71,7 +69,7 @@
               <ion-label>
                 <ion-icon name="lock" color="primary"></ion-icon>
               </ion-label>
-              <ion-input type="password" formControlName="password" placeholder="Password:" class="input_placeholder_coler"></ion-input>
+              <ion-input type="password" formControlName="userpwd" placeholder="Password:" class="input_placeholder_coler"></ion-input>
             </ion-item>
             
             <ion-item lines="none"  *ngIf="!signin_isSelected" class="item_border_redius margin_top">
@@ -85,7 +83,7 @@
               <ion-label>
                 <ion-icon color="primary" name="happy"></ion-icon>
               </ion-label>
-              <ion-input type="text" formControlName="nickname" placeholder="Nickname:" class="input_placeholder_coler"></ion-input>
+              <ion-input type="text" formControlName="usernickname" placeholder="Nickname:" class="input_placeholder_coler"></ion-input>
             </ion-item>
         </div>
         <ion-button @flyInOutRight [disabled]="!signupForm.valid" expand="block" type="submit" class="background_border_primary margin_top">

@@ -1,0 +1,58 @@
+.align_center {
+    text-align: center;
+}
+
+ion-content {
+    position: relative;
+    height: 100%;
+}
+
+.informationbar {
+    position: relative;
+    width: 100%;
+    height: 40%;
+    background-color: transparent;
+}
+
+.informationbar img {
+    border-radius: 50%;
+    width: 50%;
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    //background-color: var(--ion-color-primary);
+    //filter: blur(px);
+    z-index: 1;
+    background-image: url(../../../assets/background.png);
+    background-size: 100% 100%;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.flex_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.felx_colum {
+    flex-direction: column;
+}
+
+.margin_top {
+    margin-top: 1rem;
+}
+
+.font_title {
+    color: white;
+    font-weight: bolder;
+    font-size: 1.2rem;
+}

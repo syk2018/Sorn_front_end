@@ -13,3 +13,15 @@
 .no_heighlight {
     --highlight-height:0;
 }
+
+.editor_content {
+    color: #898989;
+}
+
+#editorContent {
+    -webkit-user-select:text;
+}
+
+#editorTitle {
+    -webkit-user-select:text;
+}

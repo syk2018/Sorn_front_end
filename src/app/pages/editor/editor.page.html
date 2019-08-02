@@ -1,18 +1,27 @@
-<ion-header>
+<ion-header no-border>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="submit()">
+        <ion-label>
+          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+        </ion-label>
+      </ion-button>
+    </ion-buttons>
     <ion-title class="align_center">
-      Editor
+      Show time！
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-item class="no_heighlight">
-    <ion-input type="text" placeholder="Input the title of your article..."></ion-input>
+    <ion-input type="text" [(ngModel)]="article.articletitle" placeholder="Input the title of your article..."></ion-input>
   </ion-item>
 
   <div id="editorTitle" class="margin_top"></div>
   <div id="editorContent" class="text">
-  
   </div>
 </ion-content>

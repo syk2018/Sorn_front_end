@@ -1,9 +1,28 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>home</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title class="align_center">Sessions</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content fullscreen>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light" (click)="presentActionSheet()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  <ion-list no-padding>
+    <ion-grid fixed class="grid_no_padding">
+      <ion-row>
+        <ion-col  @flyDownTrigger_multiple size="12" size-md="6" *ngFor="let session of sessions">
+          <img [src]="session.src" routerLink="/session/{{session.id}}">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!--<ion-item  lines="none">
+      <ion-card routerLink="/viewer/{{article.articleid}}">
+        <img src="assets/background.png">
+      </ion-card>
+    </ion-item>-->
+  </ion-list>
 </ion-content>

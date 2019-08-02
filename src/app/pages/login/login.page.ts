@@ -13,7 +13,11 @@ import {
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Md5 } from "ts-md5";
+import { LoadingController, ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
+import { Users } from 'src/app/interfaces/users';
 
 @Component({
   selector: 'app-login',
@@ -102,18 +106,33 @@ export class LoginPage implements OnInit {
   signin_isSelected = true;
   isChanged = true;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private loadingController: LoadingController,
+              private toastController: ToastController,
+              private router: Router,
+              private storage: Storage ) { }
 
+  userInformation: Users = {
+    userId:0,
+    useravatar:0,
+    usernickname:'',
+    userdescription:'',
+    userismanager:0,
+    username:'',
+    userpwd:'',
+    userregdate:null
+  }
+  
   signinForm = new FormGroup({
     username: new FormControl('', [ Validators.required, Validators.minLength(5)]),
-    password: new FormControl('', [ Validators.required, Validators.minLength(10), Validators.maxLength(20)]),
+    userpwd: new FormControl('', [ Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
   });
 
   signupForm = new FormGroup({
     username: new FormControl('', [ Validators.required, Validators.minLength(5)]),
-    password: new FormControl('', [ Validators.required, Validators.minLength(10), Validators.maxLength(20)]),
-    re_password: new FormControl('', [ Validators.required, Validators.minLength(10), Validators.maxLength(20)]),
-    nickname: new FormControl('', [ Validators.required, ])
+    userpwd: new FormControl('', [ Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+    re_password: new FormControl('', [ Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+    usernickname: new FormControl('', [ Validators.required, ])
   });
 
   signinButtonCurrentClass: {};
@@ -195,9 +214,15 @@ export class LoginPage implements OnInit {
     this.isChanged = !this.isChanged;
   }
 
-  onSigninSubmit() {
-    console.log(this.signinForm.value);
-    const api = 'http://localhost:8888/users/login';
+  async onSigninSubmit() {
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    const api = 'https://syk2018.cn/web/users/login';
+
+    this.signinForm.controls.userpwd.setValue(Md5.hashStr(
+      this.signinForm.controls.userpwd.value
+    ).toString());
 
     const httpOptions = {
       headers : new HttpHeaders({
@@ -205,14 +230,34 @@ export class LoginPage implements OnInit {
       })
     };
 
-    this.http.post(api, this.signinForm.value, httpOptions).subscribe(result => {
-      console.log(result);
+    this.http.post(api, this.signinForm.value, httpOptions).subscribe((result: any) => {
+      if (result.data != null) {        
+        this.storage.set('user',result.data[0]).then(() => {
+          const api = 'https://syk2018.cn/web/file/getById' + '?' + 'id=' + result.data[0].useravatar;
+          this.http.get(api).subscribe((result:any) => {
+            this.storage.set('avatar',result.data.fileurl).then(() => {
+              this.storage.get('user').then((result) => {
+                this.presentToast('Welcome back,' + result.usernickname + '!', 3000);
+                loading.dismiss();
+                this.router.navigateByUrl('/tabs/home');
+              })
+            })
+          })
+        })
+      } else {
+        loading.dismiss();
+        this.presentToast('Wrong username or password.', 3000);
+        this.signinForm.reset();
+      }
     });
   }
 
-  onSignupSubmit() {
-    console.log(this.signupForm.value);
-    const api = 'http://localhost:8888/users/create';
+  async onSignupSubmit() {
+    const api = 'https://syk2018.cn/web/users/signUp';
+
+    this.signupForm.controls.userpwd.setValue(Md5.hashStr(
+      this.signupForm.controls.userpwd.value
+    ).toString());
 
     const httpOptions = {
       headers : new HttpHeaders({
@@ -220,9 +265,36 @@ export class LoginPage implements OnInit {
       })
     };
 
-    this.http.post(api, this.signupForm.value, httpOptions).subscribe(result => {
-      console.log(result);
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    this.http.post(api, this.signupForm.value, httpOptions).subscribe((result: any) => {
+      if (result.data != null) {
+        this.storage.set('user',result.data[0]).then(() => {
+          const api = 'https://syk2018.cn/web/file/getById' + '?' + 'id=' + result.data[0].useravatar;
+          this.http.get(api).subscribe((result:any) => {
+            this.storage.set('avatar',result.data.fileurl).then(() => {
+              this.storage.get('user').then((result) => {
+                this.presentToast('Welcome,' + result.usernickname + '!', 3000);
+                loading.dismiss();
+                this.router.navigateByUrl('/tabs/home');
+              })
+            })
+          })
+        })
+      } else {
+        loading.dismiss();
+        this.presentToast('Sign up filed.', 3000);
+      }
     });
+  }
+
+  async presentToast(mymessage: string, myduration: number) {
+    const toast = await this.toastController.create({
+      message: mymessage,
+      duration: myduration
+    });
+    toast.present();
   }
 
 }
