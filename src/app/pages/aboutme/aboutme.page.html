@@ -1,14 +1,58 @@
+<ion-header no-border>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" (click)="openFirst()">
+      <ion-icon slot="icon-only" name="menu"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-  <div class="informationbar">
-    <div class="background"></div>
-    <div class="content flex_center">
-      <div class="flex_center felx_colum">
-        <img [src]= "userAvatarUrl">
-        <ion-label class="margin_top font_title">{{userInformation.usernickname}}</ion-label>
+    <div class="profile flex_center">
+      <div class="profile_background"></div>
+      <div class="profile_information flex_center">
+        <div class="flex_center flex_direction">
+          <img [src]="userAvatarUrl" (click)="myInput.click()">
+          <div class="profile_name">{{userInformation.usernickname}}</div>
+        </div>
       </div>
+      <div class="cover"></div>
     </div>
-  </div>
-  <div>
-    <ion-button expand="full" color="danger" (click)="signout()">Sign out</ion-button>
-  </div>
+    <div class="panel">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="6">
+            <div class="flex_center flex_direction">
+              <div class="digits">{{userInformation.userattention}}</div>
+              <div>POINRTS</div>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="flex_center flex_direction">
+              <div class="digits">{{userInformation.userfans}}</div>
+              <div>FOLLOWERS</div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <div class="list" padding>
+      <div class="flex_center if_none" *ngIf="isNone">
+        <ion-label>You have not published any articles...</ion-label>
+      </div>
+      <ion-list *ngIf="!isNone">
+        <ion-list-header>
+        
+        </ion-list-header>
+        <ion-item *ngFor="let article of articles; index as i" routerLink="/viewer/{{article.articleid}}">
+            <ion-thumbnail slot="start">
+              <img [src]="articles_img[i]">
+            </ion-thumbnail>
+            <ion-label>
+              <h3>{{article.articletitle}}</h3>
+              <p>{{delHtmlTag(article.articlecontentshtml)}}</p>
+            </ion-label>
+          </ion-item>
+      </ion-list>
+    </div>
+
+    
 </ion-content>

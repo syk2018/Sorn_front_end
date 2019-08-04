@@ -31,15 +31,6 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'message',
-        children: [
-          {
-            path: '',
-            loadChildren: '../message/message.module#MessagePageModule'
-          }
-        ]
-      },
-      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

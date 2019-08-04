@@ -8,5 +8,7 @@
 </ion-header>
 
 <ion-content padding>
-  <div class="content" @InsertRemoveTrigger [innerHTML]="article.articlecontentshtml"></div>
+  <div class="content" @InsertRemoveTrigger>
+    <div [innerHTML]="article.articlecontentshtml"></div>
+  </div>
 </ion-content>

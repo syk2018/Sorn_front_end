@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Article } from 'src/app/interfaces/article';
 import { Session } from 'src/app/interfaces/session';
 import { LoadingController } from '@ionic/angular';
@@ -44,6 +44,7 @@ export class SessionPage implements OnInit {
   sessionId:string;
   articles:Article[] = [];
   articles_img:string[];
+  articles_author:string[100] = '';
 
   pageNum:number;
   
@@ -69,6 +70,25 @@ export class SessionPage implements OnInit {
       this.getArticle();
     })
   }  
+
+  async getAuthor() {
+    const api = 'https://syk2018.cn/web/users/getAuthors';
+    var userId = new Array();
+
+    for(var i = 0; i < this.articles.length; i++) {
+      userId.push(this.articles[i].articleuserid);
+    }
+
+    const httpOptions = {
+      headers : new HttpHeaders({
+      'Content-Type':  'application/json'
+      })
+    };
+
+    this.http.post(api,userId,httpOptions).subscribe((result:any) => {
+      this.articles_author = result.data;
+    })
+  }
 
   loadData(event) {
   
@@ -102,11 +122,11 @@ export class SessionPage implements OnInit {
       }
 
       Array.prototype.push.apply(this.articles_img,temp_img);
-      console.log(this.articles_img.length);
 
       for( let i = 0; i < temp.length; i++) {
         this.articles.push(temp[i]);
       }
+      this.getAuthor();
       event.target.complete();  
     });
   }
@@ -144,6 +164,7 @@ export class SessionPage implements OnInit {
           }
         }
       }
+      this.getAuthor();
       loading.dismiss();
     })
   }
@@ -152,7 +173,4 @@ export class SessionPage implements OnInit {
     return str.replace(/<[^>]+>/g, '');
   }
 
-  ionImgDidLoad() {
-    console.log('finish!!!!!');
-  }
 }

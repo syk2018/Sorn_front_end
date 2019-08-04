@@ -1,3 +1,5 @@
+import { NumericLiteral } from 'typescript';
+
 export interface Users {
     userId:number;
     useravatar:number;
@@ -7,4 +9,6 @@ export interface Users {
     username:string;
     userpwd:string;
     userregdate:Date;
+    userattention:number;
+    userfans:number;
 }

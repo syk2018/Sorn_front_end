@@ -51,6 +51,8 @@ export class EditorPage implements OnInit {
     userdescription:'',
     userismanager:0,
     username:'',
+    userattention:0,
+    userfans:0,
     userpwd:'',
     userregdate:null
   }

@@ -120,6 +120,8 @@ export class LoginPage implements OnInit {
     userismanager:0,
     username:'',
     userpwd:'',
+    userattention:0,
+    userfans:0,
     userregdate:null
   }
   
