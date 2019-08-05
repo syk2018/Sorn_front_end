@@ -81,47 +81,50 @@ export class ModifyPage implements OnInit {
     toast.present();
   }
 
-  async handleChange(info: { file: UploadFile }) {
+  async upload(info: { file: UploadFile }) {
     const loading = await this.loadingController.create();
     await loading.present();
+  
+    this.handleChange(info);
 
+    this.events.subscribe('upload seccessful',() => {
+      loading.dismiss();
+    })
+  }
+
+  async handleChange(info: { file: UploadFile }) {
+    
     switch (info.file.status) {
       case 'uploading':
         break;
       case 'done':
         this.userInformation.useravatar = info.file.response.data[0].fileId;
+        console.log('调用');
+        const api = 'https://syk2018.cn/web/users/update';
+
+        const httpOptions = {
+          headers : new HttpHeaders({
+          'Content-Type':  'application/json'
+          })
+        };
+
+        this.http.post(api,this.userInformation,httpOptions).subscribe((result:any) => {
+          this.userInformation = result.data;  
+          const api = 'https://syk2018.cn/web/file/getById?id=' + this.userInformation.useravatar;
+          this.http.get(api).subscribe((result:any) => {
+            this.userAvatarUrl = result.data.fileurl;
+            this.storage.set('avatar',this.userAvatarUrl).then(() => {
+              this.events.publish('update');
+              this.events.publish('upload seccessful');
+              this.presentToast('Successful!',3000);
+            })
+          })
+        }) 
         break;
       case 'error':
         console.log('failed');
         return;
-    }
-
-    const api = 'https://syk2018.cn/web/users/update';
-
-    const httpOptions = {
-      headers : new HttpHeaders({
-      'Content-Type':  'application/json'
-      })
-    };
-
-    this.http.post(api,this.userInformation,httpOptions).subscribe((result:any) => {
-      this.userInformation = result.data;
-      this.storage.remove('user').then(() => {
-        this.storage.set('user',this.userInformation).then(() => {
-          const api = 'https://syk2018.cn/web/file/getById?id=' + this.userInformation.useravatar;
-          this.http.get(api).subscribe((result:any) => {
-            this.userAvatarUrl = result.data.fileurl;
-            this.storage.remove('avatar').then(() => {
-              this.storage.set('avatar',this.userAvatarUrl).then(() => {
-                this.events.publish('update');
-                loading.dismiss();
-                this.presentToast('Successful!',3000);
-              })
-            })
-          })
-        })
-      })
-    })    
-  }
+    }   
+}
 
 }

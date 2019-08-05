@@ -14,7 +14,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Md5 } from "ts-md5";
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Users } from 'src/app/interfaces/users';
@@ -107,6 +107,7 @@ export class LoginPage implements OnInit {
   isChanged = true;
 
   constructor(private http: HttpClient,
+              private alertController: AlertController,
               private loadingController: LoadingController,
               private toastController: ToastController,
               private router: Router,
@@ -220,6 +221,29 @@ export class LoginPage implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
 
+    if(this.signinForm.invalid) {
+      loading.dismiss();
+      if(this.signinForm.controls.username.invalid) {
+        if(this.signinForm.controls.username.errors.required) {
+          this.presentAlert('Username is required.')
+        }
+        else if(this.signinForm.controls.username.errors.minlength) {
+          this.presentAlert('The minlength of username is 5.')
+        }
+      }
+      else {
+        loading.dismiss();
+        if(this.signinForm.controls.userpwd.errors.required) {
+          this.presentAlert('Password is required.')
+        }
+        else if(this.signinForm.controls.userpwd.errors.minlength) {
+          this.presentAlert('The minlength of password is 6.')
+        }
+        else if(this.signinForm.controls.userpwd.errors.maxlength) {
+          this.presentAlert('The maxlength of password is 20.')
+        }
+      }  
+    } else {
     const api = 'https://syk2018.cn/web/users/login';
 
     this.signinForm.controls.userpwd.setValue(Md5.hashStr(
@@ -252,43 +276,93 @@ export class LoginPage implements OnInit {
         this.signinForm.reset();
       }
     });
+    }  
   }
 
   async onSignupSubmit() {
-    const api = 'https://syk2018.cn/web/users/signUp';
-
-    this.signupForm.controls.userpwd.setValue(Md5.hashStr(
-      this.signupForm.controls.userpwd.value
-    ).toString());
-
-    const httpOptions = {
-      headers : new HttpHeaders({
-      'Content-Type':  'application/json'
-      })
-    };
-
     const loading = await this.loadingController.create();
     await loading.present();
 
-    this.http.post(api, this.signupForm.value, httpOptions).subscribe((result: any) => {
-      if (result.data != null) {
-        this.storage.set('user',result.data[0]).then(() => {
-          const api = 'https://syk2018.cn/web/file/getById' + '?' + 'id=' + result.data[0].useravatar;
-          this.http.get(api).subscribe((result:any) => {
-            this.storage.set('avatar',result.data.fileurl).then(() => {
-              this.storage.get('user').then((result) => {
-                this.presentToast('Welcome,' + result.usernickname + '!', 3000);
-                loading.dismiss();
-                this.router.navigateByUrl('/tabs/home');
+    if(this.signupForm.invalid) {
+      if(this.signupForm.controls.username.invalid) {
+        loading.dismiss();
+        if(this.signupForm.controls.username.errors.required) {
+          this.presentAlert('Username is required.')
+        }
+        else if(this.signupForm.controls.username.errors.minlength) {
+          this.presentAlert('The minlength of username is 5.');
+        }
+      }
+      else if(this.signupForm.controls.userpwd.invalid) {
+        loading.dismiss();
+        if(this.signupForm.controls.userpwd.errors.required) {
+          this.presentAlert('Password is required.');
+        }
+        else if(this.signupForm.controls.userpwd.errors.minlength) {
+          this.presentAlert('The minlength of password is 6.');
+        }
+        else if(this.signupForm.controls.userpwd.errors.maxlength) {
+          this.presentAlert('The maxlength of password is 20.')
+        }
+      }
+      else if(this.signupForm.controls.re_password.invalid) {
+        loading.dismiss();
+        if(this.signupForm.controls.re_password.errors.required) {
+          this.presentAlert('Repeat password is required.');
+        }
+        else if(this.signupForm.controls.re_password.errors.minlength) {
+          this.presentAlert('The minlength of repeat password is 6.');
+        }
+        else if(this.signupForm.controls.re_password.errors.maxlength) {
+          this.presentAlert('The maxlength of repeat password is 6.')
+        }
+      }
+      else if(this.signupForm.controls.userpwd.value != this.signupForm.controls.re_password.value) {
+        loading.dismiss();
+        this.presentAlert('Passwords are different.');
+      }
+      else {
+        loading.dismiss();
+        this.presentAlert('Nickname is required');
+      }
+      
+    } else {
+      const api = 'https://syk2018.cn/web/users/signUp';
+
+      this.signupForm.controls.userpwd.setValue(Md5.hashStr(
+        this.signupForm.controls.userpwd.value
+      ).toString());
+
+      const httpOptions = {
+        headers : new HttpHeaders({
+        'Content-Type':  'application/json'
+        })
+      };
+
+      this.http.post(api, this.signupForm.value, httpOptions).subscribe((result: any) => {
+        if (result.code == 200) {
+          this.storage.set('user',result.data[0]).then(() => {
+            const api = 'https://syk2018.cn/web/file/getById' + '?' + 'id=' + result.data[0].useravatar;
+            this.http.get(api).subscribe((result:any) => {
+              this.storage.set('avatar',result.data.fileurl).then(() => {
+                this.storage.get('user').then((result) => {
+                  this.presentToast('Welcome,' + result.usernickname + '!', 3000);
+                  loading.dismiss();
+                  this.router.navigateByUrl('/tabs/home');
+                })
               })
             })
           })
-        })
-      } else {
-        loading.dismiss();
-        this.presentToast('Sign up filed.', 3000);
-      }
-    });
+        } else if(result.code == 8401) {
+          loading.dismiss();
+          this.presentToast('Username has been used.', 3000);
+        }
+        else {
+          loading.dismiss();
+          this.presentToast('Sign up failed', 3000);
+        }
+      });
+    }
   }
 
   async presentToast(mymessage: string, myduration: number) {
@@ -297,6 +371,16 @@ export class LoginPage implements OnInit {
       duration: myduration
     });
     toast.present();
+  }
+
+  async presentAlert(myMessage:string) {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: myMessage,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }
