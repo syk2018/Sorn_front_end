@@ -8,11 +8,11 @@ Sorn是一个简单的网络文章发布系统。现阶段使用了一些主流�
 
 - 前端项目：[https://github.com/syk2018/Sorn_front_end](https://github.com/syk2018/Sorn_front_end)
 
-#前端部分介绍
+# 前端部分介绍
 
 Sorn的前端部分采用基于Angular的Ionic4框架去实现。项目使用[Angular_CLI](https://github.com/angular/angular-cli)生成。
 
-##运行说明
+## 运行说明
 
 1. 首先在项目目录下运行 `npm install`来安装依赖。
 2. 在项目目录下运行 `ionic serve`来运行项目。
