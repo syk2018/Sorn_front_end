@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="submit()">
+        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Modify profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <div class="upload_content flex_center flex_direction">
+        <img [src]="userAvatarUrl" class="avatar">
+        <nz-upload 
+        nzAction="https://syk2018.cn/web/uploader/upload"
+        nzName="files"
+        [nzShowUploadList]="false"
+        (nzChange)="handleChange($event)">
+          <button nz-button><i nz-icon nzType="upload"></i><span>Click to Upload Avatar</span></button>
+        </nz-upload>
+
+        <div class="margin_top">
+          <ion-label class="fonts_title">Basic Information:</ion-label>
+          <ion-item>
+            <ion-label position="fixed">
+              Nickname:
+            </ion-label>
+            <ion-input type="text" [(ngModel)]="userInformation.usernickname"></ion-input>
+          </ion-item>
+        </div>
+        
+    </div>
+</ion-content>

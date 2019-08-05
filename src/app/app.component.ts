@@ -38,4 +38,9 @@ export class AppComponent {
       })
     })
   }
+
+  toModify() {
+    this.menu.close('first');
+    this.router.navigateByUrl('/modify');
+  }
 }

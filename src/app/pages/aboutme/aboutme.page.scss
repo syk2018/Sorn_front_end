@@ -5,9 +5,13 @@ ion-content {
 ion-header {
     position:absolute;
 }
+
+ion-toolbar {
+    --background:transparent;
+}
 .profile {
     position: relative;
-    height: 50%;
+    height: 55%;
     width: 100%;
 }
 
@@ -33,8 +37,6 @@ ion-header {
     height: 130px;
     border-radius: 50%;
     border: 1px solid #949599;
-
-    
 }
 
 .cover {

@@ -4,7 +4,8 @@ import { Users } from '../../interfaces/users';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Article } from 'src/app/interfaces/article';
-import { MenuController } from '@ionic/angular';
+import { MenuController, LoadingController, Events } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-aboutme',
@@ -14,8 +15,10 @@ import { MenuController } from '@ionic/angular';
 export class AboutmePage implements OnInit {
 
   constructor(private http: HttpClient,
+              private loadingController: LoadingController,
               private storage: Storage,
               private router: Router,
+              private events: Events,
               private menu: MenuController) { }
 
   userInformation: Users = {
@@ -41,6 +44,9 @@ export class AboutmePage implements OnInit {
 
   ngOnInit() {
     this.getinformation();
+    this.events.subscribe('update',() => {
+      this.getinformation();
+    })
   }
 
   ionViewWillEnter() {
@@ -108,4 +114,5 @@ export class AboutmePage implements OnInit {
   delHtmlTag(str) {
     return str.replace(/<[^>]+>/g, '');
   }
+
 }

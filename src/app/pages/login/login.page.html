@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <form *ngIf="signin_isSelected" padding class="align_center margin_top_more" [formGroup]="signinForm" (ngSubmit)="onSigninSubmit()">
+      <form *ngIf="signin_isSelected" padding class="align_center margin_top_more" [formGroup]="signinForm">
         <div @flyDownTrigger_multiple>
           <ion-item lines="none" class="item_border_redius margin_top">
               <ion-label>
@@ -51,12 +51,12 @@
           
         <ion-item *ngIf="signin_isSelected" lines="none" disabled="true" class="item_border_redius margin_top item_background_transparent"></ion-item>
     
-        <ion-button @flyInOutLeft [disabled]="!signinForm.valid" expand="block" type="submit" class="background_border_primary margin_top">
+        <ion-button @flyInOutLeft [disabled]="!signinForm.valid" expand="block" (click)="onSigninSubmit()" class="background_border_primary margin_top">
           <div @InsertRemoveTrigger_Quick *ngIf="signin_isSelected">Login</div>
         </ion-button> 
       </form>
 
-      <form *ngIf="!signin_isSelected" padding class="align_center margin_top_more" [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
+      <form *ngIf="!signin_isSelected" padding class="align_center margin_top_more" [formGroup]="signupForm">
         <div @flyUpTrigger_multiple>
           <ion-item lines="none" class="item_border_redius margin_top">
               <ion-label>
@@ -86,10 +86,11 @@
               <ion-input type="text" formControlName="usernickname" placeholder="Nickname:" class="input_placeholder_coler"></ion-input>
             </ion-item>
         </div>
-        <ion-button @flyInOutRight [disabled]="!signupForm.valid" expand="block" type="submit" class="background_border_primary margin_top">
+        <ion-button @flyInOutRight [disabled]="!signupForm.valid" expand="block" (click)="onSignupSubmit()" class="background_border_primary margin_top">
           <div @InsertRemoveTrigger_Quick *ngIf="!signin_isSelected">Submit</div>
         </ion-button>
       </form>
     </div>
   </div>
+  
 </ion-content>

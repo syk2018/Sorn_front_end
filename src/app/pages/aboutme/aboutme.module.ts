@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { AboutmePage } from './aboutme.page';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    NzUploadModule,
     FormsModule,
     ReactiveFormsModule,
     IonicModule,

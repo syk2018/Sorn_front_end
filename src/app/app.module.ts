@@ -13,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 @NgModule({
   declarations: [AppComponent,],
   entryComponents: [],
@@ -21,6 +21,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    NgZorroAntdModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
     ReactiveFormsModule,

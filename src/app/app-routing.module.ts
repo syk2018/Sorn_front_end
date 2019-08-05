@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'editor/:id', loadChildren: './pages/editor/editor.module#EditorPageModule' },
   { path: 'viewer/:id', loadChildren: './pages/viewer/viewer.module#ViewerPageModule' },
   { path: 'session/:id', loadChildren: './pages/session/session.module#SessionPageModule' },
+  { path: 'modify', loadChildren: './pages/modify/modify.module#ModifyPageModule' },
 ];
 
 @NgModule({
