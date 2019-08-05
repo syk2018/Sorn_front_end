@@ -1,4 +1,4 @@
-![Logo](https://raw.githubusercontent.com/syk2018/Sorn_front_end/master/src/assets/logo.png)
+<center>![Logo](https://raw.githubusercontent.com/syk2018/Sorn_front_end/master/src/assets/logo.png)</center>
 # Sorn
 Sorn是一个简单的网络文章发布系统。现阶段使用了一些主流框架去实现，采用前后端分离的思想。Sorn被分为两个部分，该项目是Sorn的前端部分。查看具体的软件开发文档请参照docs文件夹。
 
